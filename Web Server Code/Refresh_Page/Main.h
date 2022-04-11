@@ -1342,6 +1342,9 @@ const char MAIN_page[] PROGMEM = R"=====(
 
         var light = [];
         var temp = [];
+        var s;
+        var v;
+        var c;
 
         setInterval(function() {
              getData();
@@ -1349,33 +1352,35 @@ const char MAIN_page[] PROGMEM = R"=====(
 
         function getData() {
 
-            var s = (getRandomInt(1,100)).toString();
+            s = (getRandomInt(1,100)).toString();
             document.getElementById("temperature").innerHTML = s + "C";
 
-            var v = (getRandomInt(1,50)).toString();
+            v = (getRandomInt(1,50)).toString();
             document.getElementById("voltage").innerHTML = v + "V";
 
-            var c = (getRandomInt(1,200)).toString();
+            c = (getRandomInt(1,200)).toString();
             document.getElementById("current").innerHTML = c + "A"; 
 
             var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "readADC", true);
             xhttp.onreadystatechange = function() {
                 for(let i = 1; i < 141; i++){
                     if (this.readyState == 4 && this.status == 200) {
                         light[i] = this.responseText;
+                        temp[i] = 1;
                     }
-                    temp[i] = 1;
+                    else{
+                      document.querySelectorAll(".grid-item2").forEach((item, i) => {
+                      item.style.background = 'blue';
+                    });
+                    }
                 }
             };
-            xhttp.open("GET", "readADC", true);
+            // xhr.setRequestHeader("content-type","BMS Web Server");
             xhttp.timeout = 5000;
-
-            xhttp.ontimeout = timeout(){
-              document.querySelectorAll(".grid-item2").forEach((item, i) => {
-                item.style.background = 'blue';
-              });
-            } 
-            
+            xhttp.ontimeout = function(){
+              alert("Timed out!!!");
+            }
             xhttp.send();
 
 

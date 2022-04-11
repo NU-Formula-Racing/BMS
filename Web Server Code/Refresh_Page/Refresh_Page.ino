@@ -3,7 +3,7 @@
  * Updates and Gets data from webpage without page refresh
  * https://circuits4you.com
  */
-#define LIGHT_SENSOR_PIN 39 // ESP32 pin GIOP36 (ADC0) 
+#define LIGHT_SENSOR_PIN 36 // ESP32 pin GIOP36 (ADC0) 
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
