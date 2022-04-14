@@ -44,9 +44,8 @@ const char MAIN_page[] PROGMEM = R"=====(
    <body style="text-align:center;">
     <br>
     <h2 style="font-size:1.5vw">Cell Voltages and Temperatures</h2>
-</body>
 
-<body>
+
 <div class="grid-container2">
     <h1 style="font-size:15px">Segment 1: </h1> 
     <p style="margin-right: 30px"></p>
@@ -1209,6 +1208,8 @@ const char MAIN_page[] PROGMEM = R"=====(
   </div>
   <p style="margin-bottom: 5px"></p>
 
+</body>
+
     <style>
 
         .grid-container1 { 
@@ -1366,20 +1367,16 @@ const char MAIN_page[] PROGMEM = R"=====(
             xhttp.onreadystatechange = function() {
                 for(let i = 1; i < 141; i++){
                     if (this.readyState == 4 && this.status == 200) {
+                        clearTimeout(timeout); 
                         light[i] = this.responseText;
                         temp[i] = 1;
                     }
-                    else{
-                      document.querySelectorAll(".grid-item2").forEach((item, i) => {
-                      item.style.background = 'blue';
-                    });
-                    }
                 }
             };
-            // xhr.setRequestHeader("content-type","BMS Web Server");
-            xhttp.timeout = 5000;
-            xhttp.ontimeout = function(){
-              alert("Timed out!!!");
+            var timeout = setTimeout(ajaxTimeout,5000);
+            function ajaxTimeout(){
+                xhttp.abort();
+                alert("ESP32 has been disconnected!");
             }
             xhttp.send();
 
