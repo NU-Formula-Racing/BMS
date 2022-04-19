@@ -1346,6 +1346,7 @@ const char MAIN_page[] PROGMEM = R"=====(
         var s;
         var v;
         var c;
+        var disconnect = false;
 
         setInterval(function() {
              getData();
@@ -1375,8 +1376,8 @@ const char MAIN_page[] PROGMEM = R"=====(
             };
             var timeout = setTimeout(ajaxTimeout,5000);
             function ajaxTimeout(){
-                xhttp.abort();
-                alert("ESP32 has been disconnected!");
+              xhttp.abort();
+              alert("ESP32 has been disconnected!");
             }
             xhttp.send();
 
