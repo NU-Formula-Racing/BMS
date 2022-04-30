@@ -8,12 +8,12 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 
-#include "index.h"  //Web page header file
+#include "Main.h"  //Web page header file
 
 WebServer server(80);
 
 //Enter your SSID and PASSWORD
-const char* ssid = "Test Web Server";
+const char* ssid = "BMS Web Server";
 const char* password = "123456789";
 
 //===============================================================
@@ -29,7 +29,10 @@ void handleADC() {
  String adcValue = String(a);
  
  server.send(200, "text/plane", adcValue); //Send ADC value only to client ajax request
+ Serial.println(adcValue);
 }
+
+
 
 //===============================================================
 // Setup
